@@ -96,8 +96,6 @@ class GroqLLM:
 
 
 
-
-
 class AdvancedRAGPipline:
     def __init__(self, retriever, llm):
         self.retriever = retriever

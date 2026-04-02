@@ -3,7 +3,7 @@ from src.embeddings import EmbManagaer
 from src.vectorstore import VectorStore
 from src.search import RAGRetriever
 from src.model import GroqLLM, AdvancedRAGPipline
-
+from langchain_groq import ChatGroq
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -59,8 +59,10 @@ except Exception as e:
     raise
 
 
+groq_api_key = os.getenv("GROQ_API_KEY")
+llm = ChatGroq(api_key=groq_api_key, model="llama-3.3-70b-versatile", temperature=0.1, max_tokens=1024)
 # Setting up the Pipline
-adv_rag = AdvancedRAGPipline(rag_retriever, groq_llm)
+adv_rag = AdvancedRAGPipline(rag_retriever, llm)
 result = adv_rag.query("how ESRGAN work ? in super resolution?", 5, 0.0, False, True)
 print("\nFinal Answer:", result['answer'])
 print("Summary:", result['summary'])
